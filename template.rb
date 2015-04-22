@@ -3,3 +3,7 @@ def source_paths
 end
 
 copy_file 'Gemfile'
+
+# Set up bower
+copy_file '.bowerrc'
+template 'bower.json.erb', 'bower.json'
