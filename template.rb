@@ -10,3 +10,6 @@ template 'bower.json.erb', 'bower.json'
 
 # Set up guard
 copy_file 'Guardfile'
+
+# Set up puma
+copy_file 'config/puma.rb'
