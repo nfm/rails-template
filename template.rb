@@ -13,3 +13,6 @@ copy_file 'Guardfile'
 
 # Set up puma
 copy_file 'config/puma.rb'
+
+# Set up Procfile
+copy_file 'Procfile'
