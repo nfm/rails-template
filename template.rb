@@ -10,6 +10,9 @@ copy_file 'overrides/Gemfile', 'Gemfile'
 remove_file 'config/database.yml'
 template 'overrides/database.yml.erb', 'config/database.yml'
 
+# Set up package.json
+copy_file 'package.json'
+
 # Set up bower
 copy_file '.bowerrc'
 template 'bower.json.erb', 'bower.json'
