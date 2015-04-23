@@ -2,7 +2,9 @@ def source_paths
   Array(super) + [File.join(File.expand_path(File.dirname(__FILE__)), 'templates')]
 end
 
-copy_file 'Gemfile'
+# Set up Gemfile
+remove_file 'Gemfile'
+copy_file 'overrides/Gemfile', 'Gemfile'
 
 # Set up bower
 copy_file '.bowerrc'
@@ -21,10 +23,11 @@ copy_file 'Procfile'
 environment "config.active_job.queue_adapter = :sidekiq"
 
 # Set up Sprockets ES6
-copy_file 'app/assets/javascripts/application.js'
-environment <<-CODE
+remove_file 'app/assets/javascripts/application.js'
+copy_file 'overrides/application.js', 'app/assets/javascripts/application.js'
+environment """
 # Use system-js for Sprockets ES6 modules
 Rails.application.config.assets.configure do |env|
   env.register_transformer 'text/ecmascript-6', 'application/javascript', Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
 end
-CODE
+"""
