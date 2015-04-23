@@ -38,3 +38,7 @@ Rails.application.config.assets.configure do |env|
   env.register_transformer 'text/ecmascript-6', 'application/javascript', Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
 end
 """
+
+# Set up Heroku
+copy_file '.buildpacks'
+copy_file 'lib/tasks/heroku.rake'
