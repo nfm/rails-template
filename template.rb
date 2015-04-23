@@ -6,6 +6,10 @@ end
 remove_file 'Gemfile'
 copy_file 'overrides/Gemfile', 'Gemfile'
 
+# Set up database.yml
+remove_file 'config/database.yml'
+template 'overrides/database.yml.erb', 'config/database.yml'
+
 # Set up bower
 copy_file '.bowerrc'
 template 'bower.json.erb', 'bower.json'
