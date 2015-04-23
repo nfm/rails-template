@@ -39,6 +39,9 @@ Rails.application.config.assets.configure do |env|
 end
 """
 
+# Set up staging environment
+copy_file 'config/environments/staging.rb'
+
 # Set up Heroku
 copy_file '.buildpacks'
 copy_file 'lib/tasks/heroku.rake'
