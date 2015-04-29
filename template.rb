@@ -39,6 +39,15 @@ Rails.application.config.assets.configure do |env|
 end
 """
 
+# Configure generators
+environment """
+config.generators do |g|
+  g.stylesheets false
+  g.javascripts false
+  g.helper false
+end
+"""
+
 # Set up staging environment
 copy_file 'config/environments/staging.rb'
 

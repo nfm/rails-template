@@ -2,7 +2,6 @@
 * guard minitest, minitest colored output etc.
 * Fix indentation of Sprockets ES6 config in config/application.rb
 * Tidy up routes / default controller and view?
-* Configure generators?
 * .gitignore contents (including tags and gems.tags)
 * Optional metricular
 * Optional eventy
