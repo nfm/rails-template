@@ -2,9 +2,11 @@ def source_paths
   Array(super) + [File.join(File.expand_path(File.dirname(__FILE__)), 'templates')]
 end
 
+@sidekiq = yes?('Use sidekiq?')
+
 # Set up Gemfile
 remove_file 'Gemfile'
-copy_file 'overrides/Gemfile', 'Gemfile'
+template 'overrides/Gemfile.erb', 'Gemfile'
 
 # Set up database.yml
 remove_file 'config/database.yml'
@@ -24,29 +26,15 @@ copy_file 'Guardfile'
 copy_file 'config/puma.rb'
 
 # Set up Procfile
-copy_file 'Procfile'
+template 'Procfile.erb'
 
-# Set up sidekiq
-environment "config.active_job.queue_adapter = :sidekiq"
+# Set up config/application.rb
+remove_file 'config/application.rb'
+template 'overrides/application.rb.erb', 'config/application.rb'
 
 # Set up Sprockets ES6
 remove_file 'app/assets/javascripts/application.js'
 copy_file 'overrides/application.js', 'app/assets/javascripts/application.js'
-environment """
-# Use system-js for Sprockets ES6 modules
-Rails.application.config.assets.configure do |env|
-  env.register_transformer 'text/ecmascript-6', 'application/javascript', Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
-end
-"""
-
-# Configure generators
-environment """
-config.generators do |g|
-  g.stylesheets false
-  g.javascripts false
-  g.helper false
-end
-"""
 
 # Set up staging environment
 copy_file 'config/environments/staging.rb'

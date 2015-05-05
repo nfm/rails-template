@@ -1,0 +1,30 @@
+require File.expand_path('../boot', __FILE__)
+
+require 'rails/all'
+
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
+
+module <%= @app_name.capitalize %>
+  class Application < Rails::Application
+    # Use system-js for Sprockets ES6 modules
+    Rails.application.config.assets.configure do |env|
+      env.register_transformer 'text/ecmascript-6', 'application/javascript', Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
+    end
+
+<% if @sidekiq -%>
+    config.active_job.queue_adapter = :sidekiq
+<% end -%>
+
+    # Configure generators
+    config.generators do |g|
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+    end
+
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
+  end
+end
