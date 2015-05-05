@@ -45,6 +45,10 @@ copy_file 'overrides/application.js', 'app/assets/javascripts/application.js'
 # Set up staging environment
 copy_file 'config/environments/staging.rb'
 
+# Set up test_helper.rb
+remove_file 'test/test_helper.rb'
+copy_file 'test/test_helper.rb'
+
 # Set up Heroku
 copy_file '.buildpacks'
 copy_file 'lib/tasks/heroku.rake'
