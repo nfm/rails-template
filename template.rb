@@ -26,7 +26,7 @@ copy_file 'Guardfile'
 copy_file 'Envfile'
 template '.env.erb', '.env'
 remove_file 'config/secrets.yml'
-copy_file 'secrets.yml', 'config/secrets.yml'
+copy_file 'overrides/secrets.yml', 'config/secrets.yml'
 
 # Set up puma
 copy_file 'config/puma.rb'
