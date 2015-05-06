@@ -55,6 +55,11 @@ copy_file '.buildpacks'
 copy_file 'lib/tasks/heroku.rake'
 
 after_bundle do
+  # Set up default controller and routes
+  generate 'controller site index'
+  remove_file 'config/routes.rb'
+  copy_file 'overrides/routes.rb', 'config/routes.rb'
+
   # Set up Stripe and Payola
   if @stripe
     generate 'payola:install'
