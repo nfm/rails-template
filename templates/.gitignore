@@ -1,0 +1,11 @@
+/.bundle
+/log/*
+!/log/.keep
+/tmp
+/public/assets
+/tags
+/gems.tags
+/.coverage
+/.env
+/node_modules
+/vendor/assets/components

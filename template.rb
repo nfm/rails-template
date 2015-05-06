@@ -66,4 +66,9 @@ after_bundle do
     rake 'db:migrate'
     puts "You will need to add your Stripe account credentials to .env"
   end
+
+  # Set up git
+  remove_file '.gitignore'
+  copy_file '.gitignore'
+  git :init
 end
