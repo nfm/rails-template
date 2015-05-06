@@ -3,6 +3,7 @@ def source_paths
 end
 
 @sidekiq = yes?('Use sidekiq?')
+@stripe = yes?('Use stripe?')
 
 # Set up Gemfile
 remove_file 'Gemfile'
@@ -23,7 +24,7 @@ template 'bower.json.erb', 'bower.json'
 copy_file 'Guardfile'
 
 # Set up ENVied
-copy_file 'Envfile'
+template 'Envfile.erb', 'Envfile'
 template '.env.erb', '.env'
 remove_file 'config/secrets.yml'
 copy_file 'overrides/secrets.yml', 'config/secrets.yml'
@@ -52,3 +53,17 @@ copy_file 'test/test_helper.rb'
 # Set up Heroku
 copy_file '.buildpacks'
 copy_file 'lib/tasks/heroku.rake'
+
+after_bundle do
+  # Set up Stripe and Payola
+  if @stripe
+    generate 'payola:install'
+    generate 'model SubscriptionPlan amount:integer interval:string stripe_id:string name:string'
+    inject_into_file "app/models/subscription_plan.rb", after: "class SubscriptionPlan < ActiveRecord::Base\n" do
+      "  include Payola::Plan\n"
+    end
+    rake 'db:create'
+    rake 'db:migrate'
+    puts "You will need to add your Stripe account credentials to .env"
+  end
+end

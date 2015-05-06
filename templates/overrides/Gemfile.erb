@@ -15,6 +15,12 @@ gem 'puma'
 <%= "gem 'sidekiq'\n" if @sidekiq -%>
 gem 'turbolinks'
 
+<% if @stripe -%>
+# Stripe
+gem 'stripe'
+gem 'payola-payments'
+<% end -%>
+
 # Assets
 gem 'coffee-rails', '~> 4.1.0'
 gem 'sass-rails', '~> 5.0'

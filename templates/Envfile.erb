@@ -1,0 +1,5 @@
+variable :SECRET_KEY_BASE, :string
+<% if @stripe -%>
+variable :STRIPE_SECRET_KEY, :string
+variable :STRIPE_PUBLISHABLE_KEY, :string
+<% end %>
